@@ -16,12 +16,13 @@ public class Bussbokningssystem {
         Scanner input = new Scanner(System.in);
         int val;
         do {
-            System.out.println("\nMeny:");
+            System.out.println("\nMeny för bussbokning, välj alternativ med siffra 0-6:");
             System.out.println("1. Boka en plats för din färd");
             System.out.println("2. Hitta en bokning med personnummer eller namn så du kan se vilken plats hen sitter på");
             System.out.println("3. Ta bort en bokning med personnummer eller namn");
             System.out.println("4. Skriv ut sorterad lista av bokningar så du kan se vilka platser är upptagna av vilka personer");
             System.out.println("5. Beräkna vinsten av alla sålda biljetter");
+            System.out.println("6. Visa lediga platser");            
             System.out.println("0. Avsluta programmet");
             System.out.print("Välj ett alternativ: ");
             val = input.nextInt();
@@ -31,6 +32,7 @@ public class Bussbokningssystem {
                 case 3 -> taBortBokning();
                 case 4 -> skrivUtBokningar();
                 case 5 -> System.out.println("Vinsten för alla bokningar är: " + beraknaVinst());
+                case 6 -> ledigaPlatser();
                 case 0 -> System.out.println("Programmet avslutas");
                 default -> System.out.println("Felaktigt val, var snäll och försök igen med siffrorna 0-5");
             }
@@ -231,4 +233,21 @@ s += ", ";
 }
 return s;
 }
+    static void ledigaPlatser() {
+        int availableWindowSeats = countAvailableSeats(FONSTER_PLATSER);
+        int availableAisleSeats = countAvailableSeats(GANG_PLATSER);
+
+        System.out.println("Antal lediga fönsterplatser: " + availableWindowSeats);
+        System.out.println("Antal lediga gångplatser: " + availableAisleSeats);
+    }
+
+    static int countAvailableSeats(int[] seatArray) {
+        int availableSeats = 0;
+        for (int seatNumber : seatArray) {
+            if (!platsFinns(seatNumber)) {
+                availableSeats++;
+            }
+        }
+        return availableSeats;
+    }
 }
